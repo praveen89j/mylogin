@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * @file
  * All functionality of mylogin module.
  */
@@ -16,13 +16,13 @@ function mylogin_menu() {
   return $menu;
 }
 /**
- * mylogin menu calling the form.
+ * Mylogin menu calling the form.
  */
 function mylogin_manage_item_page() {
   return drupal_get_form('mylogin_form');
 }
 /**
- * mylogin module checking whether any data or present in table.
+ * Mylogin module checking whether any data or present in table.
  */
 function mylogin_form($form, &$form_state) {
   $rowcount = db_query('SELECT `id`, `login_destination`  FROM {mylogin} WHERE `id` = 1')->rowCount();
