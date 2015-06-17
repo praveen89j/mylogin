@@ -2,10 +2,10 @@
 /**
   * Implement hook_schema()
   */
-function custom_redirection_schema() {
+function mylogin_schema() {
   $schema = array();
-  $schema['custom_redirection'] = array(
-    'description' => t('custom_redirection module table'),
+  $schema['mylogin'] = array(
+    'description' => t('mylogin module table'),
     'fields' => array(
       'id' => array(
         'description' => t('The unique Row ID'),
@@ -25,16 +25,16 @@ function custom_redirection_schema() {
 /**
   * Implement hook_enable()
   */
-function custom_redirection_enable() {
+function mylogin_enable() {
   //Check if table exists, if not install the schema.
-  if(db_table_exists('custom_redirection') == FALSE) {
-    drupal_install_schema('custom_redirection');
+  if(db_table_exists('mylogin') == FALSE) {
+    drupal_install_schema('mylogin');
   }
 }
-function custom_redirection_disable() {
+function mylogin_disable() {
   //Check if table exists, if not install the schema.
-  if(db_table_exists('custom_redirection') == FALSE) {
-    drupal_uninstall_schema('custom_redirection');
+  if(db_table_exists('mylogin') == FALSE) {
+    drupal_uninstall_schema('mylogin');
   }
 }
 ?>

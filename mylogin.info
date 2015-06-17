@@ -1,0 +1,7 @@
+name = mylogin
+description = "mylogin module we can use to do redirection once login. option provided in admin panel. its very simple module."
+core = 7.x
+version = "7.x"
+core = "7.x"
+project = "mylogin"
+;files[] = mylogin.install

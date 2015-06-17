@@ -1,32 +1,32 @@
 <?php
 /** 
  * @file
- * All functionality of custom_redirection module.
+ * All functionality of mylogin module.
  */
 
 /**
  * Implements hook_menu().
  */
-function custom_redirection_menu() {
-  $menu['admin/custom_redirection/manage'] = array(
+function mylogin_menu() {
+  $menu['admin/mylogin/manage'] = array(
     'title' => 'My login',
-    'page callback' => 'custom_redirection_manage_item_page',
+    'page callback' => 'mylogin_manage_item_page',
     'access callback' => TRUE,
   );
   return $menu;
 }
 /**
- * custom redirection menu calling the form.
+ * mylogin menu calling the form.
  */
-function custom_redirection_manage_item_page() {
-  return drupal_get_form('custom_redirection_form');
+function mylogin_manage_item_page() {
+  return drupal_get_form('mylogin_form');
 }
 /**
- * custom redirection module checking whether any data or present in table.
+ * mylogin module checking whether any data or present in table.
  */
-function custom_redirection_form($form, &$form_state) {
-  $rowcount = db_query('SELECT `id`, `login_destination`  FROM {custom_redirection} WHERE `id` = 1')->rowCount();
-  $result = db_query('SELECT id, login_destination  FROM {custom_redirection} WHERE id = 1')->fetchObject();
+function mylogin_form($form, &$form_state) {
+  $rowcount = db_query('SELECT `id`, `login_destination`  FROM {mylogin} WHERE `id` = 1')->rowCount();
+  $result = db_query('SELECT id, login_destination  FROM {mylogin} WHERE id = 1')->fetchObject();
   if ($rowcount != 0) {
     $form['#attributes']['enctype'] = 'multipart/form-data';
     $form['id'] = array(
@@ -73,26 +73,26 @@ function custom_redirection_form($form, &$form_state) {
 /**
  * Submitting form to update the changes / inserting the new data.
  */
-function custom_redirection_form_submit($form, &$form_state) {
+function mylogin_form_submit($form, &$form_state) {
   if ($form_state['values']['mode'] != 'save') {
-    db_update('custom_redirection')
+    db_update('mylogin')
     ->fields(array('login_destination' => $form_state['values']['login_destination']))
     ->condition('id', $form_state['values']['id'])
     ->execute();
-    $form_state['redirect'] = 'admin/custom_redirection/manage';
+    $form_state['redirect'] = 'admin/mylogin/manage';
   }
   else {
-    $query = db_insert('custom_redirection')
+    $query = db_insert('mylogin')
     ->fields(array('id' => '1', 'login_destination' => $form_state['values']['login_destination']))
     ->execute();
-    $form_state['redirect'] = 'admin/custom_redirection/manage';
+    $form_state['redirect'] = 'admin/mylogin/manage';
   }
 }
 /**
- * Hook_user_login used to do redirection as per configured in custom_redirection.
+ * Hook_user_login used to do redirection as per configured in mylogin.
  */
-function custom_redirection_user_login(&$edit, $account) {
-  $result = db_query('SELECT id, login_destination  FROM {custom_redirection} WHERE id = 1')->fetchObject();
+function mylogin_user_login(&$edit, $account) {
+  $result = db_query('SELECT id, login_destination  FROM {mylogin} WHERE id = 1')->fetchObject();
   if (count($result) == 1) {
     drupal_goto($result->login_destination);
   }
